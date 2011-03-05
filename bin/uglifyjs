@@ -152,6 +152,7 @@ function output(text) {
 // --------- main ends here.
 
 function show_copyright(comments) {
+        if(options.codegen_options.beautify) return "";
         var ret = "";
         for (var i = 0; i < comments.length; ++i) {
                 var c = comments[i];
@@ -176,7 +177,8 @@ function squeeze_it(code) {
                 if (options.mangle) ast = time_it("mangle", function(){
                         return pro.ast_mangle(ast, {
                                 toplevel: options.mangle_toplevel,
-                                except: options.reserved_names
+                                except: options.reserved_names,
+                                preserve_comments: options.codegen_options.beautify
                         });
                 });
                 if (options.squeeze) ast = time_it("squeeze", function(){
